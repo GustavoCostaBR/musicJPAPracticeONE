@@ -2,7 +2,9 @@ package com.allogica.musicJPAPractice.Menu;
 
 import com.allogica.musicJPAPractice.Model.Entities.Artist;
 import com.allogica.musicJPAPractice.Model.Repositories.ArtistRepository;
+import com.allogica.musicJPAPractice.Model.Services.AlbumService;
 import com.allogica.musicJPAPractice.Model.Services.ArtistService;
+import com.allogica.musicJPAPractice.Model.Services.MusicService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -13,6 +15,14 @@ public class Menu {
 
     @Autowired
     private ArtistService artistService;
+
+    @Autowired
+    private MusicService musicService;
+
+    @Autowired
+    private AlbumService albumService;
+
+
     private final Scanner keyboard = new Scanner(System.in);
 
     public void showMenu() {
@@ -24,6 +34,7 @@ public class Menu {
                     3 - List musics
                     4 - Find musics by artist
                     5 - Search artist data
+                    6 - Register album
                     9 - Exit
                     """;
 
@@ -36,7 +47,10 @@ public class Menu {
                     artistService.registerArtist();
                     break;
                 case 2:
-                    artistService.registerMusic();
+                    musicService.registerMusic();
+                    break;
+                case 6:
+                    albumService.registerAlbum();
                     break;
 //                case 3:
 //                    listarMusicas();

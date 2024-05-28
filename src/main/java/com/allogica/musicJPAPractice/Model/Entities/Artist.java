@@ -18,6 +18,10 @@ public class Artist {
         this.type = type;
     }
 
+    public String getName() {
+        return name;
+    }
+
     private String name;
 
     public Long getId() {
