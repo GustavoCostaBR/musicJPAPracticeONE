@@ -10,13 +10,13 @@ public class Album {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String name;
+    private String title;
 
     public Album() {
     }
 
-    public Album(String name, Artist artist) {
-        this.name = name;
+    public Album(String title, Artist artist) {
+        this.title = title;
         this.artist = artist;
     }
 

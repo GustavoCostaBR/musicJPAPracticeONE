@@ -1,6 +1,8 @@
 package com.allogica.musicJPAPractice.Menu;
 
+import com.allogica.musicJPAPractice.Model.Entities.Artist;
 import com.allogica.musicJPAPractice.Model.Repositories.ArtistRepository;
+import com.allogica.musicJPAPractice.Model.Services.ArtistService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -10,7 +12,7 @@ import java.util.Scanner;
 public class Menu {
 
     @Autowired
-    ArtistRepository artistRepository;
+    private ArtistService artistService;
     private final Scanner keyboard = new Scanner(System.in);
 
     public void showMenu() {
@@ -31,11 +33,11 @@ public class Menu {
 
             switch (option) {
                 case 1:
-                    registerArtist();
+                    artistService.registerArtist();
                     break;
-//                case 2:
-//                    cadastrarMusica();
-//                    break;
+                case 2:
+                    artistService.registerMusic();
+                    break;
 //                case 3:
 //                    listarMusicas();
 //                    break;
@@ -54,14 +56,7 @@ public class Menu {
         }
     }
 
-    public void registerArtist() {
-        System.out.println("Register artist...");
-        System.out.println("Type in the name of the artist: ");
-        var nome = keyboard.nextLine();
-        System.out.println("Digite o tipo do artista (solo, dupla, banda): ");
-        var tipo = keyboard.nextLine();
-        System.out.println("Artista cadastrado com sucesso!");
-    }
+
 //
 //    public void cadastrarMusica() {
 //        System.out.println("Cadastrando música...");

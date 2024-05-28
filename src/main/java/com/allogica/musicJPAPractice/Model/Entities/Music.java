@@ -22,9 +22,21 @@ public class Music {
 
     private String name;
 
+    public Artist getArtist() {
+        return artist;
+    }
+
     @ManyToOne
     @JoinColumn(name = "artist_id")
     private Artist artist;
+
+    public Album getAlbum() {
+        return album;
+    }
+
+    public void setAlbum(Album album) {
+        this.album = album;
+    }
 
     @ManyToOne
     @JoinColumn(name = "album_id")

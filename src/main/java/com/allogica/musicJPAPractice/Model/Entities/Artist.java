@@ -20,8 +20,17 @@ public class Artist {
 
     private String name;
 
+    public Long getId() {
+        return id;
+    }
+
     @Enumerated(EnumType.STRING)
     private ArtistType type;
+
+    @Override
+    public String toString() {
+        return "Artist id: " + id + "; " + "Name: " + name + "; " + "Type: " + type + ".";
+    }
 
     @OneToMany(mappedBy = "artist")
     private List<Music> musics;

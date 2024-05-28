@@ -1,5 +1,7 @@
 package com.allogica.musicJPAPractice;
 
+import com.allogica.musicJPAPractice.Menu.Menu;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -11,8 +13,10 @@ public class MusicJpaPracticeApplication implements CommandLineRunner {
 		SpringApplication.run(MusicJpaPracticeApplication.class, args);
 	}
 
+	@Autowired
+	Menu menu;
 	@Override
 	public void run(String... args) throws Exception {
-		System.out.println("Hello World");
+		menu.showMenu();
 	}
 }
