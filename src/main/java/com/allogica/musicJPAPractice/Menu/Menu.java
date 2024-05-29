@@ -1,8 +1,6 @@
 package com.allogica.musicJPAPractice.Menu;
 
 import com.allogica.musicJPAPractice.Model.Auxiliaries.CustomPrinter;
-import com.allogica.musicJPAPractice.Model.Entities.Artist;
-import com.allogica.musicJPAPractice.Model.Repositories.ArtistRepository;
 import com.allogica.musicJPAPractice.Model.Services.AlbumService;
 import com.allogica.musicJPAPractice.Model.Services.ArtistService;
 import com.allogica.musicJPAPractice.Model.Services.ChatGPTSearch;

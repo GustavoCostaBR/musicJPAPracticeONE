@@ -3,9 +3,7 @@ package com.allogica.musicJPAPractice.Model.Services;
 import com.allogica.musicJPAPractice.Model.Auxiliaries.ReceiveSpecificInteger;
 import com.allogica.musicJPAPractice.Model.Entities.Album;
 import com.allogica.musicJPAPractice.Model.Entities.Artist;
-import com.allogica.musicJPAPractice.Model.Entities.Music;
 import com.allogica.musicJPAPractice.Model.Repositories.AlbumRepository;
-import com.allogica.musicJPAPractice.Model.Repositories.ArtistRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,25 +21,32 @@ public class AlbumService {
     @Autowired
     ArtistService artistService;
 
+
     @Transactional
     public long registerAlbum() {
         System.out.println("Register album...");
-        System.out.println("Type in the title of the album: ");
-        var name = keyboard.nextLine();
+        String albumTitle = getAlbumTitleFromUser();
         Optional<Artist> optArtist = artistService.getArtistByFragmentNameAndValidate();
-        if (optArtist.isPresent()) {
-            Artist artist = optArtist.get();
-            Album album = new Album(name, artist);
-            albumRepository.save(album);
-            System.out.println("Album registered successfully!");
-            return album.getId();
-        } else {
-            System.out.println("Problem getting album. \nReturning to the main menu...");
-            return -1;
-        }
+        return optArtist.map(artist -> saveAlbum(albumTitle, artist))
+                .orElseGet(this::handleAlbumRegistrationFailure);
     }
 
-    //    TODO: quase ctz que vai dar ruim aqui por acessar a lista de artistas sem ser transactional
+    private String getAlbumTitleFromUser() {
+        System.out.println("Type in the title of the album: ");
+        return keyboard.nextLine();
+    }
+
+    private long saveAlbum(String albumTitle, Artist artist) {
+        Album album = new Album(albumTitle, artist);
+        albumRepository.save(album);
+        System.out.println("Album registered successfully!");
+        return album.getId();
+    }
+
+    private long handleAlbumRegistrationFailure() {
+        System.out.println("Problem getting album. \nReturning to the main menu...");
+        return -1;
+    }
 
     Optional<Album> getAlbumByFragmentNameAndValidate() {
         List<Album> albums = getAlbumByFragmentName();

@@ -12,7 +12,16 @@ public enum ArtistType {
             this.description = description;
         }
 
-        public String getDescription() {
+    public static boolean contains(String type) {
+        for (ArtistType artistType : ArtistType.values()) {
+            if (artistType.name().equals(type.toUpperCase())) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public String getDescription() {
             return description;
         }
 

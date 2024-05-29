@@ -2,11 +2,8 @@ package com.allogica.musicJPAPractice.Model.Services;
 
 import com.allogica.musicJPAPractice.Model.Auxiliaries.ArtistType;
 import com.allogica.musicJPAPractice.Model.Auxiliaries.ReceiveSpecificInteger;
-import com.allogica.musicJPAPractice.Model.Entities.Album;
 import com.allogica.musicJPAPractice.Model.Entities.Artist;
-import com.allogica.musicJPAPractice.Model.Entities.Music;
 import com.allogica.musicJPAPractice.Model.Repositories.ArtistRepository;
-import com.allogica.musicJPAPractice.Model.Repositories.MusicRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,22 +19,38 @@ public class ArtistService {
     @Autowired
     ArtistRepository artistRepository;
 
-
     @Transactional
     public Long registerArtist() {
         System.out.println("Register artist...");
+        String name = getArtistNameFromUser();
+        ArtistType artistType = getArtistTypeFromUser();
+        return saveArtist(name, artistType);
+    }
+
+    private String getArtistNameFromUser() {
         System.out.println("Type in the name of the artist: ");
-        var name = keyboard.nextLine();
+        return keyboard.nextLine();
+    }
+
+    private ArtistType getArtistTypeFromUser() {
         System.out.println("Type in the type of the artist (solo, duo, band): ");
-        var type = keyboard.nextLine();
-        ArtistType artistType = ArtistType.valueOf(type.toUpperCase());
+        String type;
+        do {
+            type = keyboard.nextLine();
+            if (!ArtistType.contains(type)) {
+                System.out.println("Invalid type. Please type in one of the following: solo, duo, band");
+            }
+        }   while (!ArtistType.contains(type));
+        return ArtistType.valueOf(type.toUpperCase());
+    }
+
+    private Long saveArtist(String name, ArtistType artistType) {
         Artist artist = new Artist(name, artistType);
         artistRepository.save(artist);
         System.out.println("Artist registered successfully!");
         return artist.getId();
     }
 
-    //    TODO: quase ctz que vai dar ruim aqui por acessar a lista de artistas sem ser transactional
     Optional<Artist> getArtistByFragmentNameAndValidate() {
         List<Artist> artists = getArtistByFragmentName();
         return validateIfArtistInListIfNotRegister(artists);
