@@ -65,7 +65,7 @@ public class Menu {
 
                 case 9:
                     System.out.println("Exiting...");
-                    break;
+                    return;
                 default:
                     System.out.println("Invalid option!");
             }
