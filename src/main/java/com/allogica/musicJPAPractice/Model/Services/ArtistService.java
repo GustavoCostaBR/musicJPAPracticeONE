@@ -42,39 +42,47 @@ public class ArtistService {
         List<Artist> artists = getArtistByFragmentName();
         return validateIfArtistInListIfNotRegister(artists);
     }
-    private Optional<Artist> validateIfArtistInListIfNotRegister(List<Artist> artists) {
-        Integer option;
 
-        if (artists.isEmpty()) {
-            System.out.println("No artist found with the given name.\n Choose among the options: \n 1 - Try again \n 2 - Register a new artist \n 3 - Exit to main menu");
-            option = ReceiveSpecificInteger.receiveInteger(1, 3);
-            if (option == 1) {
-                return getArtistByFragmentNameAndValidate();
-            } else if (option == 2) {
-                return getArtistById(registerArtist());
-            } else if (option == 3) {
-                return Optional.empty();
-            }
-        }
-        artists.forEach(System.out::println);
-        System.out.println("Is the artist you were looking for in the list? \n 1 - Yes \n 2 - No");
-        option = ReceiveSpecificInteger.receiveInteger(1, 2);
-        if (option == 1) {
-            System.out.println("Type in the id of the artist: ");
-            Long artistId = ReceiveSpecificInteger.receiveLong(artists.stream().map(Artist::getId).toList());
-            return getArtistById(artistId);
-        } else {
-            return getArtistById(registerArtist());
-        }
-    }
-
-    //    This method is only visible inside the package
     private List<Artist> getArtistByFragmentName() {
         List<Artist> artists;
         System.out.println("Type in a fragment of the artist name: ");
         var artistName = keyboard.nextLine();
         artists = artistRepository.findByNameContainingIgnoreCase(artistName);
         return artists;
+    }
+
+    private Optional<Artist> validateIfArtistInListIfNotRegister(List<Artist> artists) {
+        if (artists.isEmpty()) {
+            return handleEmptyArtistList();
+        }
+        return handleNonEmptyArtistList(artists);
+    }
+
+    private Optional<Artist> handleEmptyArtistList() {
+        System.out.println("No artist found with the given name.\n Choose among the options: \n 1 - Try again \n 2 - Register a new artist \n 3 - Exit to main menu");
+        int option = ReceiveSpecificInteger.receiveInteger(1, 3);
+        return switch (option) {
+            case 1 -> getArtistByFragmentNameAndValidate();
+            case 2 -> getArtistById(registerArtist());
+            default -> Optional.empty();
+        };
+    }
+
+    private Optional<Artist> handleNonEmptyArtistList(List<Artist> artists) {
+        artists.forEach(System.out::println);
+        System.out.println("Is the artist you were looking for in the list? \n 1 - Yes \n 2 - No");
+        int option = ReceiveSpecificInteger.receiveInteger(1, 2);
+        if (option == 1) {
+            return selectArtistFromList(artists);
+        } else {
+            return getArtistById(registerArtist());
+        }
+    }
+
+    private Optional<Artist> selectArtistFromList(List<Artist> artists) {
+        System.out.println("Type in the id of the artist: ");
+        Long artistId = ReceiveSpecificInteger.receiveLong(artists.stream().map(Artist::getId).toList());
+        return getArtistById(artistId);
     }
 
     private Optional<Artist> getArtistById(Long id) {
