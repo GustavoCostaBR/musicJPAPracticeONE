@@ -71,29 +71,4 @@ public class Menu {
             }
         }
     }
-
-
-//
-//    public void cadastrarMusica() {
-//        System.out.println("Cadastrando música...");
-//        System.out.println("Digite o nome da música: ");
-//        var nome = keyboard.nextLine();
-//        System.out.println("Digite o nome do artista: ");
-//        var artista = keyboard.nextLine();
-//        System.out.println("Música cadastrada com sucesso!");
-//    }
-//
-//    public void listarMusicas() {
-//        System.out.println("Listando músicas...");
-//        System.out.println("Músicas listadas com sucesso!");
-//    }
-//
-//    public void buscarMusicasPorArtista() {
-//        System.out.println("Buscando músicas por artista...");
-//        System.out.println("Digite o nome do artista: ");
-//        var artista = leitura.nextLine();
-//        System.out.println("Músicas encontradas com sucesso!");
-//    }
-//
-//    public void pesquisarDadosArtista() {
 }
