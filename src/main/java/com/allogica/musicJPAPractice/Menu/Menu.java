@@ -1,9 +1,11 @@
 package com.allogica.musicJPAPractice.Menu;
 
+import com.allogica.musicJPAPractice.Model.Auxiliaries.CustomPrinter;
 import com.allogica.musicJPAPractice.Model.Entities.Artist;
 import com.allogica.musicJPAPractice.Model.Repositories.ArtistRepository;
 import com.allogica.musicJPAPractice.Model.Services.AlbumService;
 import com.allogica.musicJPAPractice.Model.Services.ArtistService;
+import com.allogica.musicJPAPractice.Model.Services.ChatGPTSearch;
 import com.allogica.musicJPAPractice.Model.Services.MusicService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -27,7 +29,7 @@ public class Menu {
 
     public void showMenu() {
         var option = -1;
-        while(option != 0) {
+        while (option != 0) {
             var menu = """
                     1 - Register artist
                     2 - Register music
@@ -49,18 +51,20 @@ public class Menu {
                 case 2:
                     musicService.registerMusic();
                     break;
+                case 3:
+                    CustomPrinter.printMusicList(musicService.listMusics());
+                    break;
+                case 4:
+                    CustomPrinter.printMusicList(musicService.listMusicsByArtistFragmentName());
+                    break;
+                case 5:
+                    System.out.println("Please inform the artist name to search: ");
+                    ChatGPTSearch.searchArtistOnline(keyboard.nextLine());
+                    break;
                 case 6:
                     albumService.registerAlbum();
                     break;
-//                case 3:
-//                    listarMusicas();
-//                    break;
-//                case 4:
-//                    buscarMusicasPorArtista();
-//                    break;
-//                case 5:
-//                    pesquisarDadosArtista();
-//                    break;
+
                 case 9:
                     System.out.println("Exiting...");
                     break;

@@ -30,6 +30,15 @@ public class Music {
     @JoinColumn(name = "artist_id")
     private Artist artist;
 
+    @Override
+    public String toString() {
+        return "Music id: " + id +
+                "; Name: " + name + '\'' +
+                "; Artist: " + artist +
+                "; Album: " + album +
+                ".";
+    }
+
     public Album getAlbum() {
         return album;
     }

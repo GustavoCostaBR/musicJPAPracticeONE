@@ -144,4 +144,24 @@ public class MusicService {
         return;
     }
 
+    public List<Music> listMusics() {
+        return musicRepository.findAll();
+    }
+
+    public List<Music> listMusicsByArtistFragmentName() {
+        Optional<Artist> optArtist = artistService.getArtistByFragmentNameAndValidate();
+        if (optArtist.isPresent()) {
+            return listMusicsByArtist(optArtist.get().getId());
+        }
+        else{
+            System.out.println("No artist was found with the given name. Returning to the main menu...");
+            return null;
+        }
+    }
+
+    private List<Music> listMusicsByArtist(long artistId) {
+        return musicRepository.findByArtistId(artistId);
+    }
+
+
 }
